@@ -3,7 +3,7 @@ const Staff = require('../models/Staff');
 // Render the login page
 exports.loginPage = (req, res) => {
   if (req.session.user) {
-    return res.redirect('/panel/dashboard'); 
+    return res.redirect('/parcel/dashboard'); 
   }
   res.render('login');
 };
@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
     // Successful login
     req.session.user = user;
     req.session.successMessage = 'Login successful!';
-    res.redirect('/panel/dashboard');
+    res.redirect('/parcel/dashboard');
 
   } catch (error) {
     console.error('Error during login:', error);

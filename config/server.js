@@ -41,12 +41,12 @@ app.set('views', path.join(__dirname, '../views'));
 // Import routes
 const indexRoutes = require('../routes/index');
 const authRoutes = require('../routes/auth');
-const panelRoutes = require('../routes/panel');
+const panelRoutes = require('../routes/parcel');
 
 // Use routes
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
-app.use('/panel', panelRoutes);
+app.use('/parcel', panelRoutes);
 
 // 404 Error handling middleware
 app.use((req, res) => {
