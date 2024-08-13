@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <script src="/js/main.js" defer></script> 
+</head>
+<body class="bg-gray-100">
+    <div class="wrapper w-full h-lvh flex justify-center items-center">
+        <!-- Messages Div -->
+        <div id="messages" class="text-base fixed top-5 z-50 w-full max-w-2xl">
+            <% if (successMessage) { %>
+                <div class="text-green-600 bg-green-300 p-4 text-center rounded-md"><%= successMessage %></div>
+            <% } %>
+            <% if (errorMessage) { %>
+                <div class="text-red-600 bg-red-300 p-4 text-center rounded-md"><%= errorMessage %></div>
+            <% } %>
+        </div>
+         <!-- Login Form -->
+        <form action="/auth/login" class="login-form py-10 px-5" method="post">
+            <h1 class="text-red-600 text-3xl font-bold">Login</h1>
+            <div class="my-5 rounded-full border-2 border-white opacity-70 flex">
+                <input type="text" name="username" id="username" class="text-white input w-full px-3 py-2 rounded-full shadow-sm focus:outline-none focus:ring-red-600 bg-transparent border-none placeholder:text-white placeholder:opacity-50" placeholder="Username">
+            </div>
+            <div class="rounded-full border-2 border-white opacity-70 flex">
+                <input type="password" name="password" id="password" class="text-white input w-full px-3 py-2 rounded-full shadow-sm focus:outline-none focus:ring-red-600 bg-transparent border-none placeholder:text-white placeholder:opacity-50" placeholder="Password">
+            </div>
+            <div class="text-base text-red-600 my-5 flex justify-between items-center">
+                <div>
+                    <input type="checkbox" id="remember-me" name="remember-me" class="mr-2 accent-red-600 w-4 h-4"> Remember Me
+                </div>
+                <a href="#" class="text-blue-600 text-base">Forgot Password?</a>
+            </div>
+            <button type="submit" class="bg-red-600 text-white text-lg w-full py-2 rounded-full shadow-sm hover:bg-red-700">Login</button>
+        </form>
+    </div>
+</body>
+</html>
