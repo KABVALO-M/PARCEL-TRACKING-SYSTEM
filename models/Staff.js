@@ -18,6 +18,15 @@ class Staff {
       throw new Error('Error verifying password: ' + error.message);
     }
   }
+
+  static async findAll() {
+    try {
+      const [results] = await db.promisePool.query('SELECT * FROM Staff');
+      return results;
+    } catch (error) {
+      throw new Error('Error retrieving staff members: ' + error.message);
+    }
+  }
 }
 
 module.exports = Staff;
