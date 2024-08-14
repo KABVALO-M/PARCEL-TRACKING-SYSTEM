@@ -65,3 +65,51 @@ exports.addBranch = async (req, res) => {
   }
 };
 
+
+
+// STAFF
+// Render the staff page
+exports.renderStaff = async (req, res) => {
+    try {
+        const staffMembers = await Staff.findAll();
+        const branches = await Branch.findAll();
+        res.render('staff', {
+            user: req.session.user,
+            staffMembers: staffMembers,
+            branches: branches,
+            successMessage: req.session.successMessage || null,
+            errorMessage: req.session.errorMessage || null
+        });
+        // Clear messages after rendering
+        req.session.successMessage = null;
+        req.session.errorMessage = null;
+    } catch (error) {
+        console.error('Error rendering staff:', error);
+        res.render('staff', {
+            user: req.session.user,
+            errorMessage: 'Error loading staff data'
+        });
+    }
+};
+
+// Handle adding new staff
+exports.addStaff = async (req, res) => {
+    const { first_name, last_name, department, branch_id, username, password } = req.body;
+
+    if (!first_name || !last_name || !department || !username || !password) {
+        return res.json({ success: false, message: 'All fields are required.' });
+    }
+
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await Staff.addStaff(first_name, last_name, department, branch_id, username, hashedPassword);
+        req.session.successMessage = 'Staff member added successfully.';
+        return res.json({ success: true });
+    } catch (error) {
+        console.error('Error adding staff:', error);
+        return res.json({ success: false, message: 'Database error occurred.' });
+    }
+};
+

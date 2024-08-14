@@ -19,4 +19,10 @@ router.get('/branches', isAuthenticated, parcelController.renderBranches);
 // Route to handle adding a new branch
 router.post('/branches/add', parcelController.addBranch);
 
+// Route to render staff page
+router.get('/staff', parcelController.renderStaff);
+
+// Route to handle adding new staff
+router.post('/staff/add', parcelController.addStaff);
+
 module.exports = router;
