@@ -1,4 +1,21 @@
+const db = require('../config/database');
 const Staff = require('../models/Staff');
+
+exports.handleRoot = async (req, res) => {
+  try {
+    const { success, error } = await db.connect();
+
+    if (success) {
+      res.redirect('/auth/login');
+    } else {
+      console.error('Database connection error:', error);
+      res.status(404).render('404');
+    }
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    res.status(404).render('404');
+  }
+};
 
 // Render the login page
 exports.loginPage = (req, res) => {

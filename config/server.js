@@ -39,12 +39,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
 // Import routes
-const indexRoutes = require('../routes/index');
 const authRoutes = require('../routes/auth');
 const panelRoutes = require('../routes/parcel');
 
 // Use routes
-app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/parcel', panelRoutes);
 
