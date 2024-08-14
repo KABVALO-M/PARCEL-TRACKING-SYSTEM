@@ -16,4 +16,7 @@ router.get('/dashboard', isAuthenticated, parcelController.renderDashboard);
 // Branches route
 router.get('/branches', isAuthenticated, parcelController.renderBranches);
 
+// Route to handle adding a new branch
+router.post('/branches/add', parcelController.addBranch);
+
 module.exports = router;

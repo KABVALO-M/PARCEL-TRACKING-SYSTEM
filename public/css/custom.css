@@ -39,3 +39,29 @@
 .modal.open {
     display: flex;
 }
+
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+th {
+    background-color: #f44336; /* Red background for headers */
+    color: white;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f5e9e9; /* Light gray background for even rows */
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff; /* White background for odd rows */
+}
