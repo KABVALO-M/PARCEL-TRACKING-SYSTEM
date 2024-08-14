@@ -43,6 +43,7 @@ const authRoutes = require('../routes/auth');
 const panelRoutes = require('../routes/parcel');
 
 // Use routes
+app.use('/', authRoutes);
 app.use('/auth', authRoutes);
 app.use('/parcel', panelRoutes);
 
