@@ -97,6 +97,31 @@ class Parcel {
       console.error('Error updating parcel status:', error);
     }
   }
+
+   // Function to get delivered parcels
+  static async getDeliveredParcels() {
+    try {
+      const query = `
+        SELECT 
+          p.*, 
+          origin.branch_name AS origin_branch_name, 
+          origin.location AS origin_branch_location, 
+          destination.branch_name AS destination_branch_name, 
+          destination.location AS destination_branch_location
+        FROM 
+          Parcel p
+        LEFT JOIN 
+          Branch origin ON p.origin_branch_id = origin.branch_id
+        LEFT JOIN 
+          Branch destination ON p.destination_branch_id = destination.branch_id
+        WHERE p.status = 'Delivered'
+      `;
+      const [rows] = await db.promisePool.query(query);
+      return rows;
+    } catch (error) {
+      throw new Error('Error fetching delivered parcels: ' + error.message);
+    }
+  }
 }
 
 

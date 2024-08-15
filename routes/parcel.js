@@ -29,4 +29,7 @@ router.post('/staff/add', isAuthenticated, parcelController.addStaff);
 router.get('/sending', isAuthenticated, parcelController.renderSending);
 router.post('/add-parcel', isAuthenticated, parcelController.addParcel);
 
+// Route to display delivered parcels
+router.get('/collecting', isAuthenticated, parcelController.getDeliveredParcels);
+
 module.exports = router;

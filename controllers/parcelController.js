@@ -218,3 +218,19 @@ exports.addParcel = async (req, res) => {
       console.error('Error adding parcel:', error);
   }
 };
+
+exports.getDeliveredParcels = async (req, res) => {
+  try {
+      const parcels = await Parcel.getDeliveredParcels();
+      res.render('delivered', {
+          parcels: parcels,
+          successMessage: req.session.successMessage || null,
+          errorMessage: req.session.errorMessage || null,
+          user: req.session.user
+      });
+  } catch (error) {
+      console.error(error);
+      req.session.errorMessage = 'Failed to retrieve parcels.';
+      res.redirect('/parcel/delivered');
+  }
+};
