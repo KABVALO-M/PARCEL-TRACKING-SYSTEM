@@ -17,16 +17,16 @@ router.get('/dashboard', isAuthenticated, parcelController.renderDashboard);
 router.get('/branches', isAuthenticated, parcelController.renderBranches);
 
 // Route to handle adding a new branch
-router.post('/branches/add', parcelController.addBranch);
+router.post('/branches/add', isAuthenticated, parcelController.addBranch);
 
 // Route to render staff page
-router.get('/staff', parcelController.renderStaff);
+router.get('/staff', isAuthenticated, parcelController.renderStaff);
 
 // Route to handle adding new staff
-router.post('/staff/add', parcelController.addStaff);
-router.post('/staff/add', parcelController.addStaff);
+router.post('/staff/add', isAuthenticated, parcelController.addStaff);
+router.post('/staff/add', isAuthenticated, parcelController.addStaff);
 
-router.get('/sending', parcelController.renderSending);
-router.post('/add-parcel', parcelController.addParcel);
+router.get('/sending', isAuthenticated, parcelController.renderSending);
+router.post('/add-parcel', isAuthenticated, parcelController.addParcel);
 
 module.exports = router;
