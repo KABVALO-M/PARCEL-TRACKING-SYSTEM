@@ -18,6 +18,15 @@ class TrackingDevice {
       throw new Error('Error finding tracking device by ID: ' + error.message);
     }
   }
+
+  static async addDevice({ device_name, device_type, status }) {
+    try {
+      const query = 'INSERT INTO TrackingDevice (device_name, device_type, status) VALUES (?, ?, ?)';
+      await db.promisePool.query(query, [device_name, device_type, status]);
+    } catch (error) {
+      throw new Error('Error creating tracking device: ' + error.message);
+    }
+  }
 }
 
 module.exports = TrackingDevice;

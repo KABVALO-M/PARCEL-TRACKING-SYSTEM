@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Handle form submission
         const formData = new FormData(e.target);
         const data = new URLSearchParams(formData);
-        console.log(data);
         fetch('/parcel/add-parcel', {
             method: 'POST',
             body: data,
