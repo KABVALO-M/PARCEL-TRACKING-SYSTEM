@@ -3,7 +3,21 @@ const db = require('../config/database');
 class Parcel {
   static async findAll() {
     try {
-      const [results] = await db.promisePool.query('SELECT * FROM Parcel');
+      const query = `
+        SELECT 
+          p.*, 
+          origin.branch_name AS origin_branch_name, 
+          origin.location AS origin_branch_location, 
+          destination.branch_name AS destination_branch_name, 
+          destination.location AS destination_branch_location
+        FROM 
+          Parcel p
+        LEFT JOIN 
+          Branch origin ON p.origin_branch_id = origin.branch_id
+        LEFT JOIN 
+          Branch destination ON p.destination_branch_id = destination.branch_id
+      `;
+      const [results] = await db.promisePool.query(query);
       return results;
     } catch (error) {
       throw new Error('Error retrieving parcels: ' + error.message);

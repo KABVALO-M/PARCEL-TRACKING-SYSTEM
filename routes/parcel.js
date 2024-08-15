@@ -24,7 +24,9 @@ router.get('/staff', parcelController.renderStaff);
 
 // Route to handle adding new staff
 router.post('/staff/add', parcelController.addStaff);
-
 router.post('/staff/add', parcelController.addStaff);
+
+router.get('/sending', parcelController.renderSending);
+router.post('/add-parcel', parcelController.addParcel);
 
 module.exports = router;

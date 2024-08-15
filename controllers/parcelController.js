@@ -145,3 +145,75 @@ exports.addStaff = async (req, res) => {
   }
 };
 
+// Parcels Sending
+// Render the sending page
+exports.renderSending = async (req, res) => {
+  try {
+    // Fetch branches data for the dropdowns
+    const branches = await Branch.findAll();
+    // Fetch parcels data for the table
+    const parcels = await Parcel.findAll();
+
+    res.render('sending', {
+      user: req.session.user, // Assuming user data is available
+      branches: branches,
+      parcels: parcels,
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.render('sending', {
+      user: req.session.user,
+      branches: [],
+      parcels: [],
+      successMessage: null,
+      errorMessage: 'Error fetching data'
+    });
+  }
+};
+
+// Add new parcel
+exports.addParcel = async (req, res) => {
+  try {
+      const { sender_name, sender_phone, recipient_name, recipient_phone, parcel_weight, source, destination, parcel_name, parcel_value, collection_fee, collection_date, delivery_date, tracking_device_id, staff_id } = req.body;
+
+      // Fetch the branch IDs for source and destination
+      const sourceBranch = await Branch.findByLocation(source);
+      const destinationBranch = await Branch.findByLocation(destination);
+
+      if (!sourceBranch || !destinationBranch) {
+          throw new Error('Invalid branch location');
+      }
+
+      // Generate a tracking number (you can implement a custom logic here)
+      const tracking_number = `TRK${Date.now()}`;
+
+      // Prepare parcel data
+      const parcelData = {
+          tracking_number,
+          sender_name,
+          sender_phone,
+          recipient_name,
+          recipient_phone,
+          parcel_name,
+          parcel_value,
+          parcel_weight,
+          collection_fee,
+          collection_date,
+          delivery_date,
+          origin_branch_id: sourceBranch.branch_id,
+          destination_branch_id: destinationBranch.branch_id,
+          tracking_device_id,
+          staff_id
+      };
+
+      // Add the new parcel using the Parcel model
+      await Parcel.addNewParcel(parcelData);
+
+      req.flash('successMessage', 'Parcel added successfully');
+      res.json({ success: true });
+  } catch (error) {
+      console.error('Error adding parcel:', error);
+      req.flash('errorMessage', 'Failed to add parcel');
+      res.json({ success: false, error: 'Failed to add parcel' });
+  }
+};
