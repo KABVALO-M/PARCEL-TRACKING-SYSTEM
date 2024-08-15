@@ -78,7 +78,9 @@
             <div class="flex-1">
                 <div class="bg-gray-300 p-5 text-red-600 font-bold text-xl flex justify-between items-center">
                     <span>Staff Members</span>
-                    <button id="openPopup" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Add New Staff</button>
+                    <% if (user.is_admin) { %>
+                        <button id="openPopup" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Add New Staff</button>
+                    <% } %>
                 </div>
 
                 <!-- Staff Table -->
@@ -91,7 +93,9 @@
                                 <th class="py-3 px-4 border-b">Department</th>
                                 <th class="py-3 px-4 border-b">Branch</th>
                                 <th class="py-3 px-4 border-b">Username</th>
-                                <th class="py-3 px-4 border-b">Actions</th>
+                                <% if (user.is_admin) { %>
+                                    <th class="py-3 px-4 border-b">Actions</th>
+                                <% } %>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,10 +106,12 @@
                                     <td class="py-3 px-4 border-b"><%= staff.department %></td>
                                     <td class="py-3 px-4 border-b"><%= staff.branch_name || 'N/A' %></td>
                                     <td class="py-3 px-4 border-b"><%= staff.username %></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">
-                                        <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= staff.staff_id %>"></i>
-                                        <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= staff.staff_id %>"></i>
-                                    </td>
+                                    <% if (user.is_admin) { %>
+                                        <td class="border border-gray-300 px-4 py-2 text-center">
+                                            <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= staff.staff_id %>"></i>
+                                            <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= staff.staff_id %>"></i>
+                                        </td>
+                                    <% } %>
                                 </tr>
                             <% }) %>
                         </tbody>
@@ -163,21 +169,6 @@
     </div>
 
     <!-- JavaScript for Modal -->
-    <script>
-        document.getElementById('openPopup').addEventListener('click', function() {
-            document.getElementById('popup').classList.remove('hidden');
-            document.getElementById('popupOverlay').classList.remove('hidden');
-        });
-
-        document.getElementById('closePopup').addEventListener('click', function() {
-            document.getElementById('popup').classList.add('hidden');
-            document.getElementById('popupOverlay').classList.add('hidden');
-        });
-
-        document.getElementById('popupOverlay').addEventListener('click', function() {
-            document.getElementById('popup').classList.add('hidden');
-            document.getElementById('popupOverlay').classList.add('hidden');
-        });
-    </script>
+    <script src="/js/staff.js"></script>
 </body>
 </html>

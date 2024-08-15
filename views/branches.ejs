@@ -74,7 +74,9 @@
             <div class="flex-1">
                 <div class="bg-gray-300 p-5 text-red-600 font-bold text-xl flex justify-between items-center">
                     <span>Branches</span>
-                    <button id="addBranchBtn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Add Branch</button>
+                    <% if (user.is_admin) { %>
+                        <button id="addBranchBtn" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">Add Branch</button>
+                    <% } %>
                 </div>
 
                 <!-- Branches Table -->
@@ -86,7 +88,9 @@
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Name</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Location</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Contact</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Actions</th> <!-- New Actions Column -->
+                                <% if (user.is_admin) { %>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Actions</th>
+                                <% } %>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,10 +100,12 @@
                                     <td class="border border-gray-300 px-4 py-2"><%= branch.branch_name %></td>
                                     <td class="border border-gray-300 px-4 py-2"><%= branch.location %></td>
                                     <td class="border border-gray-300 px-4 py-2"><%= branch.contact %></td>
-                                    <td class="border border-gray-300 px-4 py-2 text-center">
-                                        <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= branch.brach_id %>"></i>
-                                        <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= branch.branch_id %>"></i>
-                                    </td>
+                                    <% if (user.is_admin) { %>
+                                        <td class="border border-gray-300 px-4 py-2 text-center">
+                                            <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= branch.branch_id %>"></i>
+                                            <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= branch.branch_id %>"></i>
+                                        </td>
+                                    <% } %>
                                 </tr>
                             <% }) %>
                         </tbody>

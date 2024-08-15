@@ -25,4 +25,6 @@ router.get('/staff', parcelController.renderStaff);
 // Route to handle adding new staff
 router.post('/staff/add', parcelController.addStaff);
 
+router.post('/staff/add', parcelController.addStaff);
+
 module.exports = router;
