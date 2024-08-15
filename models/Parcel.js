@@ -72,10 +72,10 @@ class Parcel {
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pending', ?, ?)`,
         [tracking_number, sender_name, sender_phone, recipient_name, recipient_phone, parcel_name, parcel_value, parcel_weight, collection_fee, collection_date, delivery_date, origin_branch_id, destination_branch_id, tracking_device_id, staff_id]
       );
-
-      console.log('Parcel added successfully:', result);
+      return { success: true };
     } catch (error) {
       console.error('Error adding new parcel:', error);
+      return { success: false, error: error.message };
     }
   }
 

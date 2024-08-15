@@ -126,7 +126,7 @@
                                             <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Parcel Name:</strong> <%= parcel.parcel_name %></p>
                                             <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Parcel Value:</strong> <%= parcel.parcel_value %></p>
                                             <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Collection Fee:</strong> <%= parcel.collection_fee %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Date:</strong> <%= parcel.date %></p>
+                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Date:</strong> <%= parcel.collection_date %></p>
                                         </div>
                                     </td>
                                 </tr>
@@ -165,13 +165,24 @@
                     <label for="parcel_weight" class="block text-sm font-medium text-gray-700">Parcel Weight</label>
                     <input type="number" id="parcel_weight" name="parcel_weight" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
                 </div>
+                <!-- Source Branch -->
                 <div class="mb-4">
-                    <label for="source" class="block text-sm font-medium text-gray-700">Source</label>
-                    <input type="text" id="source" name="source" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="source" class="block text-gray-700 font-bold mb-0.5">Source Branch</label>
+                    <select id="source" name="source" class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                        <% branches.forEach(branch => { %>
+                            <option value="<%= branch.branch_id %>"><%= branch.branch_name %></option>
+                        <% }); %>
+                    </select>
                 </div>
+
+                <!-- Destination Branch -->
                 <div class="mb-4">
-                    <label for="destination" class="block text-sm font-medium text-gray-700">Destination</label>
-                    <input type="text" id="destination" name="destination" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="destination" class="block text-gray-700 font-bold mb-0.5">Destination Branch</label>
+                    <select id="destination" name="destination" class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                        <% branches.forEach(branch => { %>
+                            <option value="<%= branch.branch_id %>"><%= branch.branch_name %></option>
+                        <% }); %>
+                    </select>
                 </div>
                 <div class="mb-4">
                     <label for="parcel_name" class="block text-sm font-medium text-gray-700">Parcel Name</label>
@@ -190,37 +201,13 @@
                     <input type="date" id="date" name="date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div class="col-span-full flex justify-end">
-                    <button type="button" id="close-modal" class="bg-gray-500 text-white px-4 py-2 rounded-md mr-2">Cancel</button>
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md">Save Parcel</button>
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md mr-2">Save Parcel</button>
+                    <button type="button" id="close-modal" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript to Handle Modal and Table Interactions -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const openModalBtn = document.getElementById('open-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const parcelModal = document.getElementById('parcel-modal');
-            const detailsRows = document.querySelectorAll('.details-row');
-
-            openModalBtn.addEventListener('click', () => {
-                parcelModal.classList.add('open');
-            });
-
-            closeModalBtn.addEventListener('click', () => {
-                parcelModal.classList.remove('open');
-            });
-
-            // Toggle details rows
-            document.querySelectorAll('.view-btn').forEach((button) => {
-                button.addEventListener('click', () => {
-                    const row = button.closest('tr').nextElementSibling;
-                    row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
-                });
-            });
-        });
-    </script>
+    <script src="/js/sending.js"></script>
 </body>
 </html>

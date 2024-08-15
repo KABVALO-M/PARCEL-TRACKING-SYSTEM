@@ -174,15 +174,8 @@ exports.renderSending = async (req, res) => {
 // Add new parcel
 exports.addParcel = async (req, res) => {
   try {
-      const { sender_name, sender_phone, recipient_name, recipient_phone, parcel_weight, source, destination, parcel_name, parcel_value, collection_fee, collection_date, delivery_date, tracking_device_id, staff_id } = req.body;
-
-      // Fetch the branch IDs for source and destination
-      const sourceBranch = await Branch.findByLocation(source);
-      const destinationBranch = await Branch.findByLocation(destination);
-
-      if (!sourceBranch || !destinationBranch) {
-          throw new Error('Invalid branch location');
-      }
+      const { sender_name, sender_phone, recipient_name, recipient_phone, parcel_weight, source, destination, parcel_name, parcel_value, collection_fee, date} = req.body;
+      staff_id = req.session.user.staff_id
 
       // Generate a tracking number (you can implement a custom logic here)
       const tracking_number = `TRK${Date.now()}`;
@@ -198,22 +191,18 @@ exports.addParcel = async (req, res) => {
           parcel_value,
           parcel_weight,
           collection_fee,
-          collection_date,
-          delivery_date,
-          origin_branch_id: sourceBranch.branch_id,
-          destination_branch_id: destinationBranch.branch_id,
-          tracking_device_id,
-          staff_id
+          collection_date: date,  // Ensure this is not null and is in a correct format
+          delivery_date: null,
+          origin_branch_id: source,
+          destination_branch_id: destination,
+          tracking_device_id: null,
+          staff_id,  
       };
 
       // Add the new parcel using the Parcel model
       await Parcel.addNewParcel(parcelData);
-
-      req.flash('successMessage', 'Parcel added successfully');
       res.json({ success: true });
   } catch (error) {
       console.error('Error adding parcel:', error);
-      req.flash('errorMessage', 'Failed to add parcel');
-      res.json({ success: false, error: 'Failed to add parcel' });
   }
 };
