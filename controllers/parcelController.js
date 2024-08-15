@@ -4,6 +4,7 @@ const Vehicle = require('../models/Vehicle');
 const Branch = require('../models/Branch');
 const Staff = require('../models/Staff');
 const bcrypt = require('bcrypt');
+const { generateTrackingNumber } = require('../utils/parcelUtils');
 
 // Render the dashboard
 exports.renderDashboard = async (req, res) => {
@@ -178,7 +179,18 @@ exports.addParcel = async (req, res) => {
       staff_id = req.session.user.staff_id
 
       // Generate a tracking number (you can implement a custom logic here)
-      const tracking_number = `TRK${Date.now()}`;
+      let tracking_number;
+      let tracking_number_exists = true;
+
+      while (tracking_number_exists) {
+          tracking_number = generateTrackingNumber();
+
+          const existingParcels = await Parcel.findByTrackingNumber(tracking_number);
+
+          if (!existingParcels) {
+            tracking_number_exists = false; 
+        }
+      }
 
       // Prepare parcel data
       const parcelData = {
