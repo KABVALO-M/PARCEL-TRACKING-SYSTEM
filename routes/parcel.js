@@ -12,13 +12,6 @@ router.get('/branches', isAuthenticated, parcelController.renderBranches);
 // Route to handle adding a new branch
 router.post('/branches/add', isAuthenticated, parcelController.addBranch);
 
-// Route to render staff page
-router.get('/staff', isAuthenticated, parcelController.renderStaff);
-
-// Route to handle adding new staff
-router.post('/staff/add', isAuthenticated, parcelController.addStaff);
-// router.post('/staff/add', isAuthenticated, parcelController.addStaff);
-
 router.get('/sending', isAuthenticated, parcelController.renderSending);
 router.post('/add-parcel', isAuthenticated, parcelController.addParcel);
 
