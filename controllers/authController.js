@@ -1,5 +1,8 @@
 const db = require('../config/database');
 const Staff = require('../models/Staff');
+const Vehicle = require('../models/Vehicle');
+const Parcel = require('../models/Parcel');
+const Branch = require('../models/Branch');
 
 exports.handleRoot = async (req, res) => {
   try {
@@ -20,7 +23,7 @@ exports.handleRoot = async (req, res) => {
 // Render the login page
 exports.loginPage = (req, res) => {
   if (req.session.user) {
-    return res.redirect('/parcel/dashboard'); 
+    return res.redirect('/dashboard'); 
   }
   res.render('login');
 };
@@ -48,7 +51,7 @@ exports.login = async (req, res) => {
     // Successful login
     req.session.user = user;
     req.session.successMessage = 'Login successful!';
-    res.redirect('/parcel/dashboard');
+    res.redirect('/dashboard');
 
   } catch (error) {
     console.error('Error during login:', error);
@@ -56,6 +59,34 @@ exports.login = async (req, res) => {
     res.redirect('/auth/login');
   }
 };
+
+// Render the dashboard
+exports.renderDashboard = async (req, res) => {
+  try {
+    // Retrieve total parcels
+    const totalParcels = await Parcel.findAll();
+    const sentParcels = await Parcel.findSentParcels();
+    const collectedParcels = await Parcel.findCollectedParcels();
+    const vehicles = await Vehicle.findAll();
+    const branches = await Branch.findAll();
+    const staffMembers = await Staff.findAll();
+
+    // Render the dashboard view with the data
+    res.render('dashboard', {
+      user: req.session.user,
+      totalParcelsCount: totalParcels.length,
+      sentParcelsCount: sentParcels.length,
+      collectedParcelsCount: collectedParcels.length,
+      totalVehicles: vehicles.length,
+      totalBranches: branches.length,
+      totalStaffMembers: staffMembers.length,
+    });
+  } catch (error) {
+    console.error('Error rendering dashboard:', error);
+    res.render('dashboard', { user: req.session.user, errorMessage: 'Error loading data' });
+  }
+};
+
 
 // Handle user logout
 exports.logout = (req, res) => {
