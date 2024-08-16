@@ -44,6 +44,7 @@ const panelRoutes = require('../routes/parcel');
 const vehicleRoutes = require('../routes/vehicles');
 const trackingDevicesRoutes = require('../routes/trackingDevices');
 const staffRoutes = require('../routes/staff');
+const branchesRoutes = require('../routes/branches');
 
 // Use routes
 app.use('/', authRoutes);
@@ -52,6 +53,7 @@ app.use('/parcel', panelRoutes);
 app.use('/vehicles', vehicleRoutes);
 app.use('/tracking-devices', trackingDevicesRoutes);
 app.use('/staff', staffRoutes);
+app.use('/branches', branchesRoutes);
 
 // 404 Error handling middleware
 app.use((req, res) => {
