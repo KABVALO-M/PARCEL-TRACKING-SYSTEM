@@ -38,4 +38,8 @@ router.get('/devices', isAuthenticated, parcelController.getTrackingDevices);
 // Route for adding a new tracking device
 router.post('/add-device', isAuthenticated, parcelController.addTrackingDevice);
 
+// Vehicle Routes
+router.get('/vehicles', isAuthenticated, parcelController.getVehicles);
+router.post('/vehicles/add', isAuthenticated, parcelController.addVehicle);
+
 module.exports = router;

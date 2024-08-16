@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles</title>
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/fontawesome-pro/css/all.min.css">
+    <script src="/js/vehicles.js" defer></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Messages Div -->
+    <div class="fixed top-5 z-50 w-full flex justify-center">
+        <div id="messages" class="text-base w-full max-w-2xl">
+            <% if (successMessage) { %>
+                <div class="text-green-600 bg-green-300 p-4 text-center rounded-md"><%= successMessage %></div>
+            <% } %>
+            <% if (errorMessage) { %>
+                <div class="text-red-600 bg-red-300 p-4 text-center rounded-md"><%= errorMessage %></div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="w-full h-lvh flex flex-col">
+        <!-- Header -->
+        <div class="flex justify-between items-center bg-red-600 p-5 sticky top-0">
+            <div>
+                <h1 class="text-white font-bold text-2xl">Courier Management System</h1>
+            </div>
+            <div class="flex items-center gap-5">
+                <i class="fa-duotone fa-solid fa-user text-2xl text-white cursor-pointer"></i>
+                <h1 class="text-white cursor-pointer font-bold"><%= user.first_name %> <%= user.last_name %></h1>
+                <a href="logout"><i class="fa-duotone fa-solid fa-right-from-bracket text-2xl text-white cursor-pointer"></i></a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="flex flex-1">
+            <div class="w-1/4 max-w-72 bg-gray-700 flex flex-col">
+                <!-- Navigation Links -->
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/dashboard"><i class="fa-sharp-duotone fa-solid fa-gauge text-2xl text-white"></i></a>
+                    <a href="/parcel/dashboard" class="text-xl text-white cursor-pointer">Dashboard</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/branches"><i class="fa-thin fa-building text-2xl text-white"></i></a>
+                    <a href="/parcel/branches" class="text-xl text-white cursor-pointer">Branches</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/staff"><i class="fa-thin fa-users text-2xl text-white"></i></a>
+                    <a href="/parcel/staff" class="text-xl text-white cursor-pointer">Staff</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/sending"><i class="fa-thin fa-share-from-square text-2xl text-white"></i></a>
+                    <a href="/parcel/sending" class="text-xl text-white cursor-pointer">Sending</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/collecting"><i class="fa-light fa-box text-2xl text-white"></i></a>
+                    <a href="/parcel/collecting" class="text-xl text-white cursor-pointer">Collecting</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/devices"><i class="fa-thin fa-tablet-rugged text-2xl text-white"></i></a>
+                    <a href="/parcel/devices" class="text-xl text-white cursor-pointer">Tracking Devices</a>
+                </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 bg-red-500 border-b">
+                    <a href="/parcel/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
+                    <a href="/parcel/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-1">
+                <div class="bg-gray-300 p-5 text-red-600 font-bold text-xl flex justify-between items-center">
+                    <span>Vehicles</span>
+                    <button id="open-modal" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center gap-2">
+                        <i class="fa-sharp fa-solid fa-plus text-xl font-bold"></i> New Vehicle
+                    </button>
+                </div>
+                <div>
+                    <div class="p-5">
+                        <!-- Vehicles Table -->
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">ID</th>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Name</th>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Registration Number</th>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Tracking Device</th>
+                                    <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% vehicles.forEach(vehicle => { %>
+                                    <tr>
+                                        <td class="px-4 py-2 border border-gray-300"><%= vehicle.vehicle_id %></td>
+                                        <td class="px-4 py-2 border border-gray-300"><%= vehicle.vehicle_name %></td>
+                                        <td class="px-4 py-2 border border-gray-300"><%= vehicle.vehicle_registration_number %></td>
+                                        <td class="px-4 py-2 border border-gray-300"><%= vehicle.tracking_device_name || 'None' %></td>
+                                        <td class="px-4 py-2 border border-gray-300 flex gap-2">
+                                            <button class="edit-button text-green-600 hover:text-green-800" data-id="<%= vehicle.vehicle_id %>">
+                                                <i class="fa-regular fa-edit"></i>
+                                            </button>
+                                            <button class="delete-button text-red-600 hover:text-red-800" data-id="<%= vehicle.vehicle_id %>">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Vehicle -->
+    <div id="vehicle-modal" class="modal">
+        <div class="modal-content bg-white shadow-lg max-w-4xl mx-auto rounded-3xl">
+            <h2 class="text-xl font-bold mb-4 bg-red-600 p-6 rounded-tl-3xl rounded-tr-3xl text-white">Add New Vehicle</h2>
+            <form id="new-vehicle-form" action="/parcel/vehicles/add" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
+                <div class="mb-4">
+                    <label for="vehicle_name" class="block text-sm font-medium text-gray-700">Vehicle Name</label>
+                    <input type="text" id="vehicle_name" name="vehicle_name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div class="mb-4">
+                    <label for="vehicle_registration_number" class="block text-sm font-medium text-gray-700">Registration Number</label>
+                    <input type="text" id="vehicle_registration_number" name="vehicle_registration_number" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div class="mb-4">
+                    <label for="tracking_device_id" class="block text-sm font-medium text-gray-700">Tracking Device</label>
+                    <select id="tracking_device_id" name="tracking_device_id" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                        <option value="">None</option>
+                        <% devices.forEach(device => { %>
+                            <option value="<%= device.tracking_device_id %>"><%= device.device_name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="col-span-full flex justify-end gap-4">
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md mr-2">Save Vehicle</button>
+                    <button type="button" id="close-modal" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('open-modal').addEventListener('click', () => {
+            document.getElementById('vehicle-modal').classList.add('open');
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('vehicle-modal').classList.remove('open');
+        });
+
+        // Add more script logic for editing or deleting vehicles here if needed
+    </script>
+</body>
+</html>
