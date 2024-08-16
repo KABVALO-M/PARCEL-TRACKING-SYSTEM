@@ -65,13 +65,13 @@
                 </div>
 
                 <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/parcel/devices"><i class="fa-thin fa-tablet-rugged text-2xl text-white"></i></a>
-                    <a href="/parcel/devices" class="text-xl text-white cursor-pointer">Tracking Devices</a>
+                    <a href="/tracking-devices"><i class="fa-thin fa-tablet-rugged text-2xl text-white"></i></a>
+                    <a href="/tracking-devices" class="text-xl text-white cursor-pointer">Tracking Devices</a>
                 </div>
 
                 <div class="flex gap-3 items-center justify-start p-5 bg-red-500 border-b">
-                    <a href="/parcel/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
-                    <a href="/parcel/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
+                    <a href="/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
+                    <a href="/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
                 </div>
             </div>
 
@@ -125,7 +125,7 @@
     <div id="vehicle-modal" class="modal">
         <div class="modal-content bg-white shadow-lg max-w-4xl mx-auto rounded-3xl">
             <h2 class="text-xl font-bold mb-4 bg-red-600 p-6 rounded-tl-3xl rounded-tr-3xl text-white">Add New Vehicle</h2>
-            <form id="new-vehicle-form" action="/parcel/vehicles/add" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
+            <form id="new-vehicle-form" action="/vehicles/add" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
                 <div class="mb-4">
                     <label for="vehicle_name" class="block text-sm font-medium text-gray-700">Vehicle Name</label>
                     <input type="text" id="vehicle_name" name="vehicle_name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
@@ -159,8 +159,6 @@
         document.getElementById('close-modal').addEventListener('click', () => {
             document.getElementById('vehicle-modal').classList.remove('open');
         });
-
-        // Add more script logic for editing or deleting vehicles here if needed
     </script>
 </body>
 </html>

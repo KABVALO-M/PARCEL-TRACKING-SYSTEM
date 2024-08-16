@@ -41,11 +41,15 @@ app.set('views', path.join(__dirname, '../views'));
 // Import routes
 const authRoutes = require('../routes/auth');
 const panelRoutes = require('../routes/parcel');
+const vehicleRoutes = require('../routes/vehicles');
+const trackingDevices = require('../routes/trackingDevices');
 
 // Use routes
 app.use('/', authRoutes);
 app.use('/auth', authRoutes);
 app.use('/parcel', panelRoutes);
+app.use('/vehicles', vehicleRoutes);
+app.use('/tracking-devices', trackingDevices);
 
 // 404 Error handling middleware
 app.use((req, res) => {

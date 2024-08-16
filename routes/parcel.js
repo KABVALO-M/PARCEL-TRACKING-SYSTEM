@@ -1,14 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const parcelController = require('../controllers/parcelController');
-
-// Middleware to ensure user is logged in
-const isAuthenticated = (req, res, next) => {
-  if (req.session.user) {
-    return next();
-  }
-  res.redirect('/auth/login');
-};
+const isAuthenticated = require('../middleware/authenticated'); 
 
 // Dashboard route
 router.get('/dashboard', isAuthenticated, parcelController.renderDashboard);
@@ -32,14 +25,7 @@ router.post('/add-parcel', isAuthenticated, parcelController.addParcel);
 // Route to display delivered parcels
 router.get('/collecting', isAuthenticated, parcelController.getDeliveredParcels);
 
-// Route for tracking devices
-router.get('/devices', isAuthenticated, parcelController.getTrackingDevices);
 
-// Route for adding a new tracking device
-router.post('/add-device', isAuthenticated, parcelController.addTrackingDevice);
 
-// Vehicle Routes
-router.get('/vehicles', isAuthenticated, parcelController.getVehicles);
-router.post('/vehicles/add', isAuthenticated, parcelController.addVehicle);
 
 module.exports = router;

@@ -17,7 +17,7 @@ document.getElementById('new-device-form').addEventListener('submit', (e) => {
     const data = new URLSearchParams(formData);
 
     // Send data to server
-    fetch('/parcel/add-device', {
+    fetch('/tracking-devices/add', {
         method: 'POST',
         body: data
     })
