@@ -71,7 +71,10 @@ exports.addParcel = async (req, res) => {
       // Add the new parcel using the Parcel model
       await Parcel.addNewParcel(parcelData);
       // Send SMS notification to the recipient and sender
-      await sendParcelDetailsSms(tracking_number, sender_name, recipient_name, recipient_phone, parcel_name, source, destination, 'Pending', date);
+      const sourceBranch = await Branch.findById(source);
+      const destinationBranch = await Branch.findById(destination);
+      console.log(sourceBranch, destinationBranch);
+      await sendParcelDetailsSms(tracking_number, sender_name, recipient_name, recipient_phone, parcel_name, sourceBranch.district, destinationBranch.district, 'Pending', date);
       res.json({ success: true });
   } catch (error) {
       console.error('Error adding parcel:', error);
