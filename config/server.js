@@ -1,13 +1,15 @@
 // config/server.js
-
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const app = express();
 const crypto = require('crypto');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const port = process.env.PORT || 3000; // Default to port 3000 if not specified
 
 const sessionSecret = crypto.randomBytes(32).toString('hex');
+
 
 // Use session middleware
 app.use(session({
@@ -30,6 +32,8 @@ app.use((req, res, next) => {
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
 // Static files
 app.use(express.static(path.join(__dirname, '../public')));
@@ -67,7 +71,7 @@ const startServer = async () => {
 
     if (success) {
       console.log('Database connected successfully.');
-      server_ip = '192.168.193.179'
+      server_ip = '192.168.182.179'
       app.listen(port, server_ip, () => {
         console.log(`Server is running on http://${server_ip}:${port}`);
       });

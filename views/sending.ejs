@@ -92,7 +92,7 @@
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">ID</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Sender Name</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Recipient Name</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Parcel Weight</th>
+                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Parcel Name</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Source</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Destination</th>
                                 <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Tracking Number</th>
@@ -106,13 +106,13 @@
                                     <td class="px-4 py-2"><%= parcel.parcel_id %></td>
                                     <td class="px-4 py-2"><%= parcel.sender_name %></td>
                                     <td class="px-4 py-2"><%= parcel.recipient_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.parcel_weight %></td>
+                                    <td class="px-4 py-2"><%= parcel.parcel_name %></td>
                                     <td class="px-4 py-2"><%= parcel.origin_branch_name %></td>
                                     <td class="px-4 py-2"><%= parcel.destination_branch_name %></td>
                                     <td class="px-4 py-2"><%= parcel.tracking_number %></td>
                                     <td class="px-4 py-2"><%= parcel.status %></td>
                                     <td class="px-4 py-2">
-                                        <i class="fa-light fa-circle-info view-btn text-blue-500 hover:text-blue-700 cursor-pointer mx-1"></i>
+                                        <i class="fa-light fa-circle-info view-btn text-blue-500 hover:text-blue-700 cursor-pointer mx-1" title="Details"></i>
                                         <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= parcel.parcel_id %>"></i>
                                         <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= parcel.parcel_id %>"></i>
                                     </td>

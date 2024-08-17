@@ -2,6 +2,7 @@
 const Parcel = require('../models/Parcel');
 const Branch = require('../models/Branch');
 const { generateTrackingNumber } = require('../utils/parcelUtils');
+const {sendParcelDetailsSms, sendLocationSms, registerWebhook, deregisterWebhook } = require('../utils/smsUtils');
 
 // Render the sending page
 exports.renderSending = async (req, res) => {
@@ -69,6 +70,8 @@ exports.addParcel = async (req, res) => {
 
       // Add the new parcel using the Parcel model
       await Parcel.addNewParcel(parcelData);
+      // Send SMS notification to the recipient and sender
+      await sendParcelDetailsSms(tracking_number, sender_name, recipient_name, recipient_phone, parcel_name, source, destination, 'Pending', date);
       res.json({ success: true });
   } catch (error) {
       console.error('Error adding parcel:', error);
