@@ -78,8 +78,8 @@ async function registerWebhook() {
         const url = 'https://sms.capcom.me/api/3rdparty/v1/webhooks';
         const username = 'OER2VW';
         const password = 'ag6fhxwj_gsnxq';
-        const uniqueId = '9aa44110-54f1-4cf7-a3a7-61c50c8e27c9';
-        const webhookUrl = 'https://webhook.site/9aa44110-54f1-4cf7-a3a7-61c50c8e27c9';
+        const uniqueId = '5474bfda-1813-4b84-ad03-69832a862949';
+        const webhookUrl = 'https://webhook.site/5474bfda-1813-4b84-ad03-69832a862949';
         const event = 'sms:received';
         
         const headers = {
@@ -117,7 +117,7 @@ async function deregisterWebhook() {
         const url = 'https://sms.capcom.me/api/3rdparty/v1/webhooks';
         const username = 'OER2VW';
         const password = 'ag6fhxwj_gsnxq';
-        const uniqueId = '955ddb9c-9f43-4d94-a5d0-359320bdc1a5'; // Replace with the webhook ID you want to deregister
+        const uniqueId = '9aa44110-54f1-4cf7-a3a7-61c50c8e27c9'; // Replace with the webhook ID you want to deregister
 
         const headers = {
             'Content-Type': 'application/json',
@@ -138,6 +138,9 @@ async function deregisterWebhook() {
         console.error('Error occurred:', error);
     }
 }
+
+// deregisterWebhook();
+registerWebhook();
 
 // Export functions
 module.exports = { sendParcelDetailsSms, sendLocationSms, registerWebhook, deregisterWebhook };

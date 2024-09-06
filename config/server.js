@@ -44,7 +44,7 @@ app.set('views', path.join(__dirname, '../views'));
 
 // Import routes
 const authRoutes = require('../routes/auth');
-const panelRoutes = require('../routes/parcel');
+const parcelRoutes = require('../routes/parcel');
 const vehicleRoutes = require('../routes/vehicles');
 const trackingDevicesRoutes = require('../routes/trackingDevices');
 const staffRoutes = require('../routes/staff');
@@ -53,7 +53,7 @@ const branchesRoutes = require('../routes/branches');
 // Use routes
 app.use('/', authRoutes);
 app.use('/auth', authRoutes);
-app.use('/parcel', panelRoutes);
+app.use('/parcel', parcelRoutes);
 app.use('/vehicles', vehicleRoutes);
 app.use('/tracking-devices', trackingDevicesRoutes);
 app.use('/staff', staffRoutes);
@@ -71,7 +71,7 @@ const startServer = async () => {
 
     if (success) {
       console.log('Database connected successfully.');
-      server_ip = '192.168.182.179'
+      server_ip = '192.168.172.179'
       app.listen(port, server_ip, () => {
         console.log(`Server is running on http://${server_ip}:${port}`);
       });

@@ -3,6 +3,7 @@ const Parcel = require('../models/Parcel');
 const Branch = require('../models/Branch');
 const { generateTrackingNumber } = require('../utils/parcelUtils');
 const {sendParcelDetailsSms, sendLocationSms, registerWebhook, deregisterWebhook } = require('../utils/smsUtils');
+const { getLocationName } = require('../utils/gpsUtils'); // Import the getLocationName function
 
 // Render the sending page
 exports.renderSending = async (req, res) => {
@@ -97,3 +98,30 @@ exports.getDeliveredParcels = async (req, res) => {
   }
 };
 
+
+// Handle SMS Reception
+exports.handleSmsReceived = async (req, res) => {
+  try {
+      const from = req.body.payload.phoneNumber;
+      const message = req.body.payload.message;
+
+      // Assuming the message is in the format "LOCATION: <tracking_number>"
+      if (message.startsWith('LOCATION:')) {
+          const trackingNumber = message.split('LOCATION:')[1].trim();
+
+          // Retrieve location name based on tracking number
+          const locationName = await getLocationName(trackingNumber);
+          console.log(locationName);
+
+          // Send response SMS with location name
+          await sendLocationSms(from, locationName);
+
+          return res.sendStatus(200); // Respond with 200 OK
+      } else {
+          return res.sendStatus(400); // Bad request if message format is incorrect
+      }
+  } catch (error) {
+      console.error('Error handling SMS:', error);
+      return res.sendStatus(500); // Internal server error
+  }
+};

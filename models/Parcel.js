@@ -125,7 +125,4 @@ class Parcel {
 }
 
 
-
-  
-
 module.exports = Parcel;
