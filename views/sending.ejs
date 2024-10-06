@@ -1,213 +1,693 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sending</title>
-    <link rel="stylesheet" href="/css/output.css">
-    <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/fontawesome-pro/css/all.min.css">
+    <link rel="stylesheet" href="/css/output.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/fontawesome-pro/css/all.min.css" />
     <script src="/js/main.js" defer></script>
-</head>
-<body class="bg-gray-100">
+  </head>
+  <body class="bg-gray-100">
     <!-- Messages Div -->
     <div class="fixed top-5 z-50 w-full flex justify-center">
-        <div id="messages" class="text-base w-full max-w-2xl">
-            <% if (successMessage) { %>
-                <div class="text-green-600 bg-green-300 p-4 text-center rounded-md"><%= successMessage %></div>
-            <% } %>
-            <% if (errorMessage) { %>
-                <div class="text-red-600 bg-red-300 p-4 text-center rounded-md"><%= errorMessage %></div>
-            <% } %>
+      <div id="messages" class="text-base w-full max-w-2xl">
+        <% if (successMessage) { %>
+        <div class="text-green-600 bg-green-300 p-4 text-center rounded-md">
+          <%= successMessage %>
         </div>
+        <% } %> <% if (errorMessage) { %>
+        <div class="text-red-600 bg-red-300 p-4 text-center rounded-md">
+          <%= errorMessage %>
+        </div>
+        <% } %>
+      </div>
     </div>
 
     <div class="w-full h-lvh flex flex-col">
-        <!-- Header -->
-        <div class="flex justify-between items-center bg-red-600 p-5 sticky top-0">
-            <div>
-                <h1 class="text-white font-bold text-2xl">Courier Management System</h1>
-            </div>
-            <div class="flex items-center gap-5">
-                <i class="fa-duotone fa-solid fa-user text-2xl text-white cursor-pointer"></i>
-                <h1 class="text-white cursor-pointer font-bold"><%= user.first_name %> <%= user.last_name %></h1>
-                <a href="logout"><i class="fa-duotone fa-solid fa-right-from-bracket text-2xl text-white cursor-pointer"></i></a>
-            </div>
+      <!-- Header -->
+      <div
+        class="flex justify-between items-center bg-red-600 p-5 sticky top-0"
+      >
+        <div>
+          <h1 class="text-white font-bold text-2xl">
+            Courier Management System
+          </h1>
+        </div>
+        <div class="flex items-center gap-5">
+          <i
+            class="fa-duotone fa-solid fa-user text-2xl text-white cursor-pointer"
+          ></i>
+          <h1 class="text-white cursor-pointer font-bold">
+            <%= user.first_name %> <%= user.last_name %>
+          </h1>
+          <a href="logout"
+            ><i
+              class="fa-duotone fa-solid fa-right-from-bracket text-2xl text-white cursor-pointer"
+            ></i
+          ></a>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="flex flex-1">
+        <div class="w-1/4 max-w-72 bg-gray-700 flex flex-col">
+          <!-- Navigation Links -->
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/dashboard"
+              ><i
+                class="fa-sharp-duotone fa-solid fa-gauge text-2xl text-white"
+              ></i
+            ></a>
+            <a href="/dashboard" class="text-xl text-white cursor-pointer"
+              >Dashboard</a
+            >
+          </div>
+
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/branches"
+              ><i class="fa-thin fa-building text-2xl text-white"></i
+            ></a>
+            <a href="/branches" class="text-xl text-white cursor-pointer"
+              >Branches</a
+            >
+          </div>
+
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/staff"
+              ><i class="fa-thin fa-users text-2xl text-white"></i
+            ></a>
+            <a href="/staff" class="text-xl text-white cursor-pointer">Staff</a>
+          </div>
+
+          <div
+            class="flex gap-3 items-center justify-start p-5 bg-red-500 border-b"
+          >
+            <a href="/parcel/sending"
+              ><i class="fa-thin fa-share-from-square text-2xl text-white"></i
+            ></a>
+            <a href="/parcel/sending" class="text-xl text-white cursor-pointer"
+              >Sending</a
+            >
+          </div>
+
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/parcel/collecting"
+              ><i class="fa-light fa-box text-2xl text-white"></i
+            ></a>
+            <a
+              href="/parcel/collecting"
+              class="text-xl text-white cursor-pointer"
+              >Collecting</a
+            >
+          </div>
+
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/tracking-devices"
+              ><i class="fa-thin fa-tablet-rugged text-2xl text-white"></i
+            ></a>
+            <a
+              href="/tracking-devices"
+              class="text-xl text-white cursor-pointer"
+              >Tracking Devices</a
+            >
+          </div>
+
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/vehicles"
+              ><i class="fa-thin fa-truck text-2xl text-white"></i
+            ></a>
+            <a href="/vehicles" class="text-xl text-white cursor-pointer"
+              >Vehicles</a
+            >
+          </div>
+          <div class="flex gap-3 items-center justify-start p-5 border-b">
+            <a href="/parcel/assign-parcels"><i class="fa-light fa-truck-loading text-2xl text-white"></i></a>
+            <a href="/parcel/assign-parcels" class="text-xl text-white cursor-pointer">Assign Parcels</a>
+        </div>
+        
         </div>
 
-        <!-- Sidebar -->
-        <div class="flex flex-1">
-            <div class="w-1/4 max-w-72 bg-gray-700 flex flex-col">
-                 <!-- Navigation Links -->
-                 <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/dashboard"><i class="fa-sharp-duotone fa-solid fa-gauge text-2xl text-white"></i></a>
-                    <a href="/dashboard" class="text-xl text-white cursor-pointer">Dashboard</a>
-                </div>
+        <!-- Main Content -->
+        <div class="flex-1">
+          <div
+            class="bg-gray-300 p-5 text-red-600 font-bold text-xl flex justify-between items-center"
+          >
+            <span>Sending</span>
+            <button
+              id="open-modal"
+              class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center gap-2"
+            >
+              <i class="fa-sharp fa-solid fa-plus text-xl font-bold"></i> New
+              Parcel
+            </button>
+          </div>
+          <div>
+            <div class="p-5">
+                <!-- Parcels Table -->
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        ID
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Sender Name
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Recipient Name
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Parcel Name
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Source
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Destination
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Tracking Number
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="border border-gray-300 px-4 py-2 bg-red-600 text-white"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% parcels.forEach(parcel => { %>
+                    <tr>
+                      <td class="px-4 py-2"><%= parcel.parcel_id %></td>
+                      <td class="px-4 py-2"><%= parcel.sender_name %></td>
+                      <td class="px-4 py-2"><%= parcel.recipient_name %></td>
+                      <td class="px-4 py-2"><%= parcel.parcel_name %></td>
+                      <td class="px-4 py-2"><%= parcel.origin_branch_name %></td>
+                      <td class="px-4 py-2">
+                        <%= parcel.destination_branch_name %>
+                      </td>
+                      <td class="px-4 py-2"><%= parcel.tracking_number %></td>
+                      <td class="px-4 py-2"><%= parcel.status %></td>
+                      <td class="px-4 py-2">
+                        <i
+                          class="fa-light fa-circle-info view-btn text-blue-500 hover:text-blue-700 cursor-pointer mx-1"
+                          title="Details"
+                        ></i>
+                        <i
+                          class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1 edit-icon"
+                          title="Edit"
+                          data-parcel='{
+                              "id": <%= parcel.parcel_id %>,
+                              "parcel_name": "<%= parcel.parcel_name %>",
+                              "sender_name": "<%= parcel.sender_name %>",
+                              "sender_phone": "<%= parcel.sender_phone %>",
+                              "sender_address": "<%= parcel.sender_address %>",
+                              "recipient_name": "<%= parcel.recipient_name %>",
+                              "recipient_phone": "<%= parcel.recipient_phone %>",
+                              "recipient_address": "<%= parcel.recipient_address %>",
+                              "parcel_weight": <%= parcel.parcel_weight %>,
+                              "tracking_number": "<%= parcel.tracking_number %>",
+                              "source_branch": <%= parcel.origin_branch_id ? parcel.origin_branch_id : 'null' %>, 
+                              "destination_branch": <%= parcel.destination_branch_id ? parcel.destination_branch_id : 'null' %>, 
+                              "parcel_value": <%= parcel.parcel_value %>,
+                              "collection_fee": <%= parcel.collection_fee %>,
+                              "date": "<%= parcel.date %>", 
+                              "status": "<%= parcel.status %>"
+                          }'
+                      ></i>
+                      <i
+                        class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1 delete-icon"
+                        title="Delete"
+                        data-id="<%= parcel.parcel_id %>"
+                      ></i>
 
-                <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/branches"><i class="fa-thin fa-building text-2xl text-white"></i></a>
-                    <a href="/branches" class="text-xl text-white cursor-pointer">Branches</a>
-                </div>
-
-                <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/staff"><i class="fa-thin fa-users text-2xl text-white"></i></a>
-                    <a href="/staff" class="text-xl text-white cursor-pointer">Staff</a>
-                </div>
-
-                <div class="flex gap-3 items-center justify-start p-5  bg-red-500 border-b">
-                    <a href="/parcel/sending"><i class="fa-thin fa-share-from-square text-2xl text-white"></i></a>
-                    <a href="/parcel/sending" class="text-xl text-white cursor-pointer">Sending</a>
-                </div>
-                
-                <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/parcel/collecting"><i class="fa-light fa-box text-2xl text-white"></i></a>
-                    <a href="/parcel/collecting" class="text-xl text-white cursor-pointer">Collecting</a>
-                </div>
-
-                <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/tracking-devices"><i class="fa-thin fa-tablet-rugged text-2xl text-white"></i></a>
-                    <a href="/tracking-devices" class="text-xl text-white cursor-pointer">Tracking Devices</a>
-                </div>
-
-                <div class="flex gap-3 items-center justify-start p-5 border-b">
-                    <a href="/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
-                    <a href="/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
-                </div>
+                      </td>
+                    </tr>
+                    <!-- Hidden row for additional details -->
+                    <tr
+                      class="details-row bg-gray-100 border-t border-gray-300"
+                      style="display: none"
+                    >
+                      <td colspan="9" class="px-4 py-4">
+                        <div
+                          class="p-4 border border-gray-300 rounded-md shadow-sm bg-white"
+                        >
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Sender Phone:</strong
+                            >
+                            <%= parcel.sender_phone %>
+                          </p>
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Recipient Phone:</strong
+                            >
+                            <%= parcel.recipient_phone %>
+                          </p>
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Parcel Name:</strong
+                            >
+                            <%= parcel.parcel_name %>
+                          </p>
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Parcel Value:</strong
+                            >
+                            <%= parcel.parcel_value %>
+                          </p>
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Collection Fee:</strong
+                            >
+                            <%= parcel.collection_fee %>
+                          </p>
+                          <p class="mb-2 text-sm">
+                            <strong class="font-medium text-gray-700"
+                              >Date:</strong
+                            >
+                            <%= parcel.collection_date %>
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
             </div>
-
-            <!-- Main Content -->
-            <div class="flex-1">
-                <div class="bg-gray-300 p-5 text-red-600 font-bold text-xl flex justify-between items-center">
-                    <span>Sending</span>
-                    <button id="open-modal" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 flex items-center gap-2">
-                        <i class="fa-sharp fa-solid fa-plus text-xl font-bold"></i> New Parcel
-                    </button>
-                </div>
-                <div>
-                    <div class="p-5">
-                        <!-- Parcels Table -->
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">ID</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Sender Name</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Recipient Name</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Parcel Name</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Source</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Destination</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Tracking Number</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Status</th>
-                                <th class="border border-gray-300 px-4 py-2 bg-red-600 text-white">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% parcels.forEach(parcel => { %>
-                                <tr>
-                                    <td class="px-4 py-2"><%= parcel.parcel_id %></td>
-                                    <td class="px-4 py-2"><%= parcel.sender_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.recipient_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.parcel_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.origin_branch_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.destination_branch_name %></td>
-                                    <td class="px-4 py-2"><%= parcel.tracking_number %></td>
-                                    <td class="px-4 py-2"><%= parcel.status %></td>
-                                    <td class="px-4 py-2">
-                                        <i class="fa-light fa-circle-info view-btn text-blue-500 hover:text-blue-700 cursor-pointer mx-1" title="Details"></i>
-                                        <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= parcel.parcel_id %>"></i>
-                                        <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= parcel.parcel_id %>"></i>
-                                    </td>
-                                </tr>
-                                <!-- Hidden row for additional details -->
-                                <tr class="details-row bg-gray-100 border-t border-gray-300" style="display: none;">
-                                    <td colspan="9" class="px-4 py-4">
-                                        <div class="p-4 border border-gray-300 rounded-md shadow-sm bg-white">
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Sender Phone:</strong> <%= parcel.sender_phone %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Recipient Phone:</strong> <%= parcel.recipient_phone %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Parcel Name:</strong> <%= parcel.parcel_name %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Parcel Value:</strong> <%= parcel.parcel_value %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Collection Fee:</strong> <%= parcel.collection_fee %></p>
-                                            <p class="mb-2 text-sm"><strong class="font-medium text-gray-700">Date:</strong> <%= parcel.collection_date %></p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <% }); %>
-                        </tbody>
-                    </table>
-                    </div>
-                    
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal for New Parcel -->
     <div id="parcel-modal" class="modal">
+      <div
+        class="modal-content bg-white shadow-lg max-w-4xl mx-auto rounded-3xl"
+      >
+        <h2
+          class="text-xl font-bold mb-4 bg-red-600 p-6 rounded-tl-3xl rounded-tr-3xl text-white"
+        >
+          Add New Parcel
+        </h2>
+        <form
+          id="new-parcel-form"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6"
+        >
+          <div class="mb-4">
+            <label
+              for="sender_name"
+              class="block text-sm font-medium text-gray-700"
+              >Sender Name</label
+            >
+            <input
+              type="text"
+              id="sender_name"
+              name="sender_name"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="sender_phone"
+              class="block text-sm font-medium text-gray-700"
+              >Sender Phone</label
+            >
+            <input
+              type="text"
+              id="sender_phone"
+              name="sender_phone"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="recipient_name"
+              class="block text-sm font-medium text-gray-700"
+              >Recipient Name</label
+            >
+            <input
+              type="text"
+              id="recipient_name"
+              name="recipient_name"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="recipient_phone"
+              class="block text-sm font-medium text-gray-700"
+              >Recipient Phone</label
+            >
+            <input
+              type="text"
+              id="recipient_phone"
+              name="recipient_phone"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="parcel_weight"
+              class="block text-sm font-medium text-gray-700"
+              >Parcel Weight</label
+            >
+            <input
+              type="number"
+              id="parcel_weight"
+              name="parcel_weight"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
+          </div>
+          <!-- Source Branch -->
+          <div class="mb-4">
+            <label for="source" class="block text-gray-700 font-bold mb-0.5"
+              >Source Branch</label
+            >
+            <select
+              id="source"
+              name="source"
+              class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50"
+            >
+              <% branches.forEach(branch => { %>
+              <option value="<%= branch.branch_id %>">
+                <%= branch.branch_name %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+
+          <!-- Destination Branch -->
+          <div class="mb-4">
+            <label
+              for="destination"
+              class="block text-gray-700 font-bold mb-0.5"
+              >Destination Branch</label
+            >
+            <select
+              id="destination"
+              name="destination"
+              class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50"
+            >
+              <% branches.forEach(branch => { %>
+              <option value="<%= branch.branch_id %>">
+                <%= branch.branch_name %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label
+              for="parcel_name"
+              class="block text-sm font-medium text-gray-700"
+              >Parcel Name</label
+            >
+            <input
+              type="text"
+              id="parcel_name"
+              name="parcel_name"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="parcel_value"
+              class="block text-sm font-medium text-gray-700"
+              >Parcel Value</label
+            >
+            <input
+              type="number"
+              id="parcel_value"
+              name="parcel_value"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div class="mb-4">
+            <label
+              for="collection_fee"
+              class="block text-sm font-medium text-gray-700"
+              >Collection Fee</label
+            >
+            <input
+              type="number"
+              id="collection_fee"
+              name="collection_fee"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="date" class="block text-sm font-medium text-gray-700"
+              >Date</label
+            >
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+            />
+          </div>
+          <div class="col-span-full flex justify-end">
+            <button
+              type="submit"
+              class="bg-red-600 text-white px-4 py-2 rounded-md mr-2"
+            >
+              Save Parcel
+            </button>
+            <button
+              type="button"
+              id="close-modal"
+              class="bg-gray-500 text-white px-4 py-2 rounded-md"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Edit Parcel -->
+    <div id="edit-parcel-modal" class="modal">
         <div class="modal-content bg-white shadow-lg max-w-4xl mx-auto rounded-3xl">
-            <h2 class="text-xl font-bold mb-4 bg-red-600 p-6 rounded-tl-3xl rounded-tr-3xl text-white">Add New Parcel</h2>
-            <form id="new-parcel-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
+            <h2 class="text-xl font-bold mb-4 bg-red-600 p-6 rounded-tl-3xl rounded-tr-3xl text-white">
+                Edit Parcel
+            </h2>
+            <form id="edit-parcel-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
+                <!-- Sender Name -->
                 <div class="mb-4">
-                    <label for="sender_name" class="block text-sm font-medium text-gray-700">Sender Name</label>
-                    <input type="text" id="sender_name" name="sender_name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="edit_sender_name" class="block text-sm font-medium text-gray-700">Sender Name</label>
+                    <input
+                        type="text"
+                        id="edit_sender_name"
+                        name="sender_name"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                        required
+                    />
                 </div>
+                
+                <!-- Sender Phone -->
                 <div class="mb-4">
-                    <label for="sender_phone" class="block text-sm font-medium text-gray-700">Sender Phone</label>
-                    <input type="text" id="sender_phone" name="sender_phone" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="edit_sender_phone" class="block text-sm font-medium text-gray-700">Sender Phone</label>
+                    <input
+                        type="text"
+                        id="edit_sender_phone"
+                        name="sender_phone"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                        required
+                    />
                 </div>
+                
+                <!-- Recipient Name -->
                 <div class="mb-4">
-                    <label for="recipient_name" class="block text-sm font-medium text-gray-700">Recipient Name</label>
-                    <input type="text" id="recipient_name" name="recipient_name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="edit_recipient_name" class="block text-sm font-medium text-gray-700">Recipient Name</label>
+                    <input
+                        type="text"
+                        id="edit_recipient_name"
+                        name="recipient_name"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                        required
+                    />
                 </div>
+                
+                <!-- Recipient Phone -->
                 <div class="mb-4">
-                    <label for="recipient_phone" class="block text-sm font-medium text-gray-700">Recipient Phone</label>
-                    <input type="text" id="recipient_phone" name="recipient_phone" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="edit_recipient_phone" class="block text-sm font-medium text-gray-700">Recipient Phone</label>
+                    <input
+                        type="text"
+                        id="edit_recipient_phone"
+                        name="recipient_phone"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                        required
+                    />
                 </div>
+    
+                <!-- Parcel Weight -->
                 <div class="mb-4">
-                    <label for="parcel_weight" class="block text-sm font-medium text-gray-700">Parcel Weight</label>
-                    <input type="number" id="parcel_weight" name="parcel_weight" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm" required>
+                    <label for="edit_parcel_weight" class="block text-sm font-medium text-gray-700">Parcel Weight</label>
+                    <input
+                        type="number"
+                        id="edit_parcel_weight"
+                        name="parcel_weight"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                        required
+                    />
                 </div>
+    
                 <!-- Source Branch -->
                 <div class="mb-4">
-                    <label for="source" class="block text-gray-700 font-bold mb-0.5">Source Branch</label>
-                    <select id="source" name="source" class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                    <label for="edit_source" class="block text-gray-700 font-bold mb-0.5">Source Branch</label>
+                    <select
+                        id="edit_source"
+                        name="source"
+                        class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                    >
                         <% branches.forEach(branch => { %>
-                            <option value="<%= branch.branch_id %>"><%= branch.branch_name %></option>
+                        <option value="<%= branch.branch_id %>">
+                            <%= branch.branch_name %>
+                        </option>
                         <% }); %>
                     </select>
                 </div>
-
+    
                 <!-- Destination Branch -->
                 <div class="mb-4">
-                    <label for="destination" class="block text-gray-700 font-bold mb-0.5">Destination Branch</label>
-                    <select id="destination" name="destination" class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-red-500 focus:ring focus:ring-red-500 focus:ring-opacity-50">
+                    <label for="edit_destination" class="block text-gray-700 font-bold mb-0.5">Destination Branch</label>
+                    <select
+                        id="edit_destination"
+                        name="destination"
+                        class="form-select block w-full border border-gray-300 rounded-md h-10 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                    >
                         <% branches.forEach(branch => { %>
-                            <option value="<%= branch.branch_id %>"><%= branch.branch_name %></option>
+                        <option value="<%= branch.branch_id %>">
+                            <%= branch.branch_name %>
+                        </option>
                         <% }); %>
                     </select>
                 </div>
+    
+                <!-- Parcel Name -->
                 <div class="mb-4">
-                    <label for="parcel_name" class="block text-sm font-medium text-gray-700">Parcel Name</label>
-                    <input type="text" id="parcel_name" name="parcel_name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    <label for="edit_parcel_name" class="block text-sm font-medium text-gray-700">Parcel Name</label>
+                    <input
+                        type="text"
+                        id="edit_parcel_name"
+                        name="parcel_name"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                    />
                 </div>
+    
+                <!-- Parcel Value -->
                 <div class="mb-4">
-                    <label for="parcel_value" class="block text-sm font-medium text-gray-700">Parcel Value</label>
-                    <input type="number" id="parcel_value" name="parcel_value" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    <label for="edit_parcel_value" class="block text-sm font-medium text-gray-700">Parcel Value</label>
+                    <input
+                        type="number"
+                        id="edit_parcel_value"
+                        name="parcel_value"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                    />
                 </div>
+    
+                <!-- Collection Fee -->
                 <div class="mb-4">
-                    <label for="collection_fee" class="block text-sm font-medium text-gray-700">Collection Fee</label>
-                    <input type="number" id="collection_fee" name="collection_fee" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    <label for="edit_collection_fee" class="block text-sm font-medium text-gray-700">Collection Fee</label>
+                    <input
+                        type="number"
+                        id="edit_collection_fee"
+                        name="collection_fee"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value=""
+                    />
                 </div>
+    
+                <!-- Date -->
                 <div class="mb-4">
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                    <input type="date" id="date" name="date" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    <label for="edit_date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <input
+                        type="date"
+                        id="edit_date"
+                        name="date"
+                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+                        value="" 
+                    />
                 </div>
+    
+                <!-- Action Buttons -->
                 <div class="col-span-full flex justify-end">
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md mr-2">Save Parcel</button>
-                    <button type="button" id="close-modal" class="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</button>
+                    <button
+                        type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded-md mr-2"
+                    >
+                        Save Changes
+                    </button>
+                    <button
+                        type="button"
+                        id="close-edit-modal"
+                        class="bg-gray-500 text-white px-4 py-2 rounded-md"
+                    >
+                        Cancel
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div
+    id="deleteModal"
+    class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
+    >
+    <div class="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
+      <h2 class="text-xl font-bold mb-4 text-red-600">Delete Parcel</h2>
+      <p class="mb-4 text-gray-700">Are you sure you want to delete this parcel?</p>
+      <div class="flex justify-end gap-4">
+        <button
+          id="cancelDelete"
+          class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+        >
+          Cancel
+        </button>
+        <button
+          id="confirmDelete"
+          class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+    </div>
+
     <script src="/js/sending.js"></script>
-</body>
+  </body>
 </html>

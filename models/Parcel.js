@@ -122,6 +122,145 @@ class Parcel {
       throw new Error('Error fetching delivered parcels: ' + error.message);
     }
   }
+
+  // Add this method to the Parcel model
+static async updateParcel(parcelData) {
+  try {
+      const { 
+          parcel_id,
+          sender_name, 
+          sender_phone, 
+          recipient_name, 
+          recipient_phone, 
+          parcel_name, 
+          parcel_value, 
+          parcel_weight, 
+          collection_fee, 
+          collection_date, 
+          delivery_date, 
+          origin_branch_id, 
+          destination_branch_id, 
+          tracking_device_id, 
+           
+      } = parcelData;
+
+      const [result] = await db.promisePool.query(
+          `UPDATE Parcel SET 
+              sender_name = ?, 
+              sender_phone = ?, 
+              recipient_name = ?, 
+              recipient_phone = ?, 
+              parcel_name = ?, 
+              parcel_value = ?, 
+              parcel_weight = ?, 
+              collection_fee = ?, 
+              collection_date = ?, 
+              delivery_date = ?, 
+              origin_branch_id = ?, 
+              destination_branch_id = ?, 
+              tracking_device_id = ? 
+          WHERE parcel_id = ?`,
+          [
+              sender_name, 
+              sender_phone, 
+              recipient_name, 
+              recipient_phone, 
+              parcel_name, 
+              parcel_value, 
+              parcel_weight, 
+              collection_fee, 
+              collection_date, 
+              delivery_date, 
+              origin_branch_id, 
+              destination_branch_id, 
+              tracking_device_id,
+              parcel_id 
+          ]
+      );
+
+      return { success: true };
+  } catch (error) {
+      console.error('Error updating parcel:', error);
+      return { success: false, error: error.message };
+  }
+}
+
+  static async getParcelsWithBranches() {
+    try {
+        const query = `
+            SELECT 
+                p.*, 
+                origin.branch_name AS origin_branch_name, 
+                origin.location AS origin_branch_location, 
+                destination.branch_name AS destination_branch_name, 
+                destination.location AS destination_branch_location
+            FROM 
+                Parcel p
+            LEFT JOIN 
+                Branch origin ON p.origin_branch_id = origin.branch_id
+            LEFT JOIN 
+                Branch destination ON p.destination_branch_id = destination.branch_id
+            WHERE 
+                p.status = 'Pending'
+        `;
+        const [results] = await db.promisePool.query(query);
+        return results;
+    } catch (error) {
+        throw new Error('Error retrieving parcels with branches: ' + error.message);
+    }
+  }
+
+
+  static async assignTrackingNumber(parcel_id, tracking_device_id) {
+      try {
+          await db.promisePool.query(`
+              UPDATE Parcel 
+              SET tracking_device_id = ?, status = 'In Transit'
+              WHERE parcel_id = ?
+          `, [tracking_device_id, parcel_id]);
+      } catch (error) {
+          throw new Error('Error assigning tracking number to parcel: ' + error.message);
+      }
+  }
+
+  static async findRecentParcels(limit) {
+      try {
+        const query = `
+          SELECT 
+            p.*, 
+            origin.branch_name AS origin_branch_name, 
+            destination.branch_name AS destination_branch_name
+          FROM 
+            Parcel p
+          LEFT JOIN 
+            Branch origin ON p.origin_branch_id = origin.branch_id
+          LEFT JOIN 
+            Branch destination ON p.destination_branch_id = destination.branch_id
+          ORDER BY 
+            p.collection_date DESC
+          LIMIT ?
+        `;
+        const [results] = await db.promisePool.query(query, [limit]);
+        return results;
+      } catch (error) {
+        throw new Error('Error retrieving recent parcels: ' + error.message);
+      }
+    }
+
+    static async deleteParcelById(parcelId) {
+      try {
+        const [result] = await db.promisePool.query('DELETE FROM Parcel WHERE parcel_id = ?', [parcelId]);
+        
+        if (result.affectedRows === 0) {
+          return { success: false, error: 'No parcel found with the given ID' };
+        }
+        
+        return { success: true };
+      } catch (error) {
+        console.error('Error deleting parcel:', error);
+        return { success: false, error: error.message };
+      }
+    }
 }
 
 

@@ -71,7 +71,7 @@ const startServer = async () => {
 
     if (success) {
       console.log('Database connected successfully.');
-      server_ip = '192.168.172.179'
+      server_ip = '192.168.143.179'
       app.listen(port, server_ip, () => {
         console.log(`Server is running on http://${server_ip}:${port}`);
       });

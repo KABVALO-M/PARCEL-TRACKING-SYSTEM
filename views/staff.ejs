@@ -73,6 +73,11 @@
                     <a href="/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
                     <a href="/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
                 </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/assign-parcels"><i class="fa-light fa-truck-loading text-2xl text-white"></i></a>
+                    <a href="/parcel/assign-parcels" class="text-xl text-white cursor-pointer">Assign Parcels</a>
+                </div>                
             </div>
 
             <div class="flex-1">
@@ -108,7 +113,7 @@
                                     <td class="py-3 px-4 border-b"><%= staff.username %></td>
                                     <% if (user.is_admin) { %>
                                         <td class="border border-gray-300 px-4 py-2 text-center">
-                                            <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= staff.staff_id %>"></i>
+                                            <i class="fa-regular fa-edit text-green-500 hover:text-green-700 cursor-pointer mx-1" title="Edit" data-id="<%= staff.staff_id %>" data-firstname="<%= staff.first_name %>" data-lastname="<%= staff.last_name %>" data-department="<%= staff.department %>" data-branch="<%= staff.branch_id %>" data-username="<%= staff.username %>"></i>
                                             <i class="fa-regular fa-trash-can text-red-500 hover:text-red-700 cursor-pointer mx-1" title="Delete" data-id="<%= staff.staff_id %>"></i>
                                         </td>
                                     <% } %>
@@ -164,6 +169,61 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- Edit Staff Form -->
+                <div id="editPopupOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+                <div id="editPopup" class="fixed top-1/4 bottom-1/4 inset-0 z-50 bg-white rounded-lg shadow-lg max-w-lg mx-auto h-fit hidden">
+                    <h2 class="text-lg font-bold bg-red-600 text-white px-8 py-3 rounded-t-lg">Edit Staff</h2>
+                    <form id="editStaffForm" action="/staff/edit" method="POST" class="p-8">
+                        <input type="hidden" id="edit_staff_id" name="staff_id">
+                        <div class="mb-4">
+                            <label for="edit_first_name" class="block text-gray-700">First Name</label>
+                            <input type="text" id="edit_first_name" name="first_name" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_last_name" class="block text-gray-700">Last Name</label>
+                            <input type="text" id="edit_last_name" name="last_name" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_department" class="block text-gray-700">Department</label>
+                            <select id="edit_department" name="department" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                                <option value="Collection">Collection</option>
+                                <option value="Sending">Sending</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_branch" class="block text-gray-700">Branch</label>
+                            <select id="edit_branch" name="branch_id" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                                <option value="">Select Branch</option>
+                                <% branches.forEach(branch => { %>
+                                    <option value="<%= branch.branch_id %>"><%= branch.branch_name %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit_username" class="block text-gray-700">Username</label>
+                            <input type="text" id="edit_username" name="username" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+                        </div>
+                        <div class="flex justify-end gap-4">
+                            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none">Update Staff</button>
+                            <button type="button" id="closeEditPopup" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none">Cancel</button>   
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div id="deleteModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+                    <div class="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
+                        <h2 class="text-xl font-bold mb-4 text-red-600">Confirm Deletion</h2>
+                        <p class="mb-4 text-gray-700">Are you sure you want to delete this staff member?</p>
+                        <div class="flex justify-end gap-4">
+                            <button id="cancelDelete" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500">Cancel</button>
+                            <button id="confirmDelete" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Delete</button>
+                        </div>
+                    </div>
+                </div>
+
+                
             </div>
         </div>
     </div>

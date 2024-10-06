@@ -43,6 +43,28 @@ class Staff {
       throw new Error('Error adding staff member: ' + error.message);
     }
   }
+
+  // Method to update staff member details
+  static async updateStaff(staff_id, first_name, last_name, department, branch_id, username) {
+    try {
+      const query = `
+        UPDATE Staff
+        SET first_name = ?, last_name = ?, department = ?, branch_id = ?, username = ?
+        WHERE staff_id = ?;
+      `;
+      await db.promisePool.query(query, [first_name, last_name, department, branch_id, username, staff_id]);
+    } catch (error) {
+      throw new Error('Error updating staff member: ' + error.message);
+    }
+  }
+
+  static async deleteStaff(staff_id) {
+    try {
+      await db.promisePool.query('DELETE FROM Staff WHERE staff_id = ?', [staff_id]);
+    } catch (error) {
+      throw new Error('Error deleting staff member: ' + error.message);
+    }
+  }
 }
 
 

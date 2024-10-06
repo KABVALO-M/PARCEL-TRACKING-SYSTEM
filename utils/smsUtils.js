@@ -78,8 +78,8 @@ async function registerWebhook() {
         const url = 'https://sms.capcom.me/api/3rdparty/v1/webhooks';
         const username = 'OER2VW';
         const password = 'ag6fhxwj_gsnxq';
-        const uniqueId = '5474bfda-1813-4b84-ad03-69832a862949';
-        const webhookUrl = 'https://webhook.site/5474bfda-1813-4b84-ad03-69832a862949';
+        const uniqueId = 'be694ac2-e1a9-4bff-bdcb-ece5e69a625c';
+        const webhookUrl = 'https://webhook.site/be694ac2-e1a9-4bff-bdcb-ece5e69a625c';
         const event = 'sms:received';
         
         const headers = {
@@ -117,7 +117,7 @@ async function deregisterWebhook() {
         const url = 'https://sms.capcom.me/api/3rdparty/v1/webhooks';
         const username = 'OER2VW';
         const password = 'ag6fhxwj_gsnxq';
-        const uniqueId = '9aa44110-54f1-4cf7-a3a7-61c50c8e27c9'; // Replace with the webhook ID you want to deregister
+        const uniqueId = '5474bfda-1813-4b84-ad03-69832a862949'; // Replace with the webhook ID you want to deregister
 
         const headers = {
             'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ async function deregisterWebhook() {
     }
 }
 
-// deregisterWebhook();
+deregisterWebhook();
 registerWebhook();
 
 // Export functions

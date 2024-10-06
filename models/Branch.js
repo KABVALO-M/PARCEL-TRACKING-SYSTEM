@@ -29,6 +29,34 @@ class Branch {
       throw new Error('Error inserting branch: ' + error.message);
     }
   }
+
+  static async updateBranch(branchId, name, location, contact) {
+    try {
+      const query = 'UPDATE Branch SET branch_name = ?, location = ?, contact = ? WHERE branch_id = ?';
+      const values = [name, location, contact, branchId];
+      const [result] = await db.promisePool.query(query, values);
+      if (result.affectedRows === 0) {
+        throw new Error('No branch found with the given ID');
+      }
+
+      return { success: true };
+    } catch (error) {
+      throw new Error('Error updating branch: ' + error.message);
+    }
+  }
+
+  static async deleteBranch(branchId) {
+    try {
+      const query = 'DELETE FROM Branch WHERE branch_id = ?';
+      const [result] = await db.promisePool.query(query, [branchId]);
+      if (result.affectedRows === 0) {
+        throw new Error('No branch found with the given ID');
+      }
+      return { success: true };
+    } catch (error) {
+      throw new Error('Error deleting branch: ' + error.message);
+    }
+  }
 }
 
 module.exports = Branch;

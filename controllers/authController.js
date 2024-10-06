@@ -67,9 +67,11 @@ exports.renderDashboard = async (req, res) => {
     const totalParcels = await Parcel.findAll();
     const sentParcels = await Parcel.findSentParcels();
     const collectedParcels = await Parcel.findCollectedParcels();
+    const recentParcels = await Parcel.findRecentParcels(5);
     const vehicles = await Vehicle.findAll();
     const branches = await Branch.findAll();
     const staffMembers = await Staff.findAll();
+    
 
     // Render the dashboard view with the data
     res.render('dashboard', {
@@ -80,6 +82,7 @@ exports.renderDashboard = async (req, res) => {
       totalVehicles: vehicles.length,
       totalBranches: branches.length,
       totalStaffMembers: staffMembers.length,
+      recentParcels: recentParcels,
     });
   } catch (error) {
     console.error('Error rendering dashboard:', error);

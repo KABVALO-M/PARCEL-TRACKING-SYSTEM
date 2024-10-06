@@ -19,9 +19,9 @@ const trackingData = {
 
 // Mapping between integer tracking device IDs and string keys in trackingData
 const trackingDeviceMapping = {
-    1: 'device1',
-    2: 'device2',
-    3: 'device3'
+    1: 'device3',
+    2: 'device1',
+    3: 'device2'
 };
 
 /**

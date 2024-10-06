@@ -71,57 +71,103 @@
                     <a href="/vehicles"><i class="fa-thin fa-truck text-2xl text-white"></i></a>
                     <a href="/vehicles" class="text-xl text-white cursor-pointer">Vehicles</a>
                 </div>
+
+                <div class="flex gap-3 items-center justify-start p-5 border-b">
+                    <a href="/parcel/assign-parcels"><i class="fa-light fa-truck-loading text-2xl text-white"></i></a>
+                    <a href="/parcel/assign-parcels" class="text-xl text-white cursor-pointer">Assign Parcels</a>
+                </div>                
                 
             </div>
             <div class="flex-1">
                 <div class="bg-gray-300 p-5 text-red-600 font-bold text-xl">Dashboard</div>
-
                 <!-- Dashboard Cards -->
                 <div class="p-5">
                     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 mt-5">
                         <!-- Card 1: Total Parcels -->
-                        <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <div class="bg-red-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-box text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= totalParcelsCount %></p>
                             <p class="text-gray-600 mt-1 text-left">Total Parcels</p>
                         </div>
 
                         <!-- Card 2: Vehicles -->
-                        <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <div class="bg-blue-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-truck text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= totalVehicles %></p>
                             <p class="text-gray-600 mt-1 text-left">Vehicles</p>
                         </div>
 
-                         <!-- Card 3: Branches -->
-                         <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <!-- Card 3: Branches -->
+                        <div class="bg-green-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-building text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= totalBranches %></p>
                             <p class="text-gray-600 mt-1 text-left">Branches</p>
                         </div>
 
                         <!-- Card 4: Staff Members -->
-                        <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <div class="bg-yellow-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-users text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= totalStaffMembers %></p>
                             <p class="text-gray-600 mt-1 text-left">Staff Members</p>
                         </div>
 
                         <!-- Card 5: Sent Parcels -->
-                        <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <div class="bg-purple-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-share-from-square text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= sentParcelsCount %></p>
                             <p class="text-gray-600 mt-1 text-left">Parcels Sent</p>
                         </div>
 
                         <!-- Card 6: Collected Parcels -->
-                        <div class="bg-white p-6 rounded-lg shadow-md flex flex-col items-start">
+                        <div class="bg-pink-200 p-6 rounded-lg shadow-md flex flex-col items-start">
                             <i class="fa-thin fa-box-open text-3xl text-red-600"></i>
                             <p class="text-4xl font-bold mt-2"><%= collectedParcelsCount %></p>
                             <p class="text-gray-600 mt-1 text-left">Parcels Collected</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Recent Parcels Section -->
+                <div class="recent-parcels-section mt-8 p-6 bg-white shadow-lg rounded-lg mx-5">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">Recently Added Parcels</h2>
+                
+                    <!-- Styled Table -->
+                    <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-300">
+                        <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-3 px-6 text-left border-b">Tracking Number</th>
+                            <th class="py-3 px-6 text-left border-b">Parcel Name</th>
+                            <th class="py-3 px-6 text-left border-b">Sender Name</th>
+                            <th class="py-3 px-6 text-left border-b">Recipient Name</th>
+                            <th class="py-3 px-6 text-left border-b">Origin Branch</th>
+                            <th class="py-3 px-6 text-left border-b">Destination Branch</th>
+                            <th class="py-3 px-6 text-left border-b">Collection Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% if (recentParcels.length > 0) { %>
+                            <% recentParcels.forEach(parcel => { %>
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-3 px-6 border-b"><%= parcel.tracking_number %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.parcel_name %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.sender_name %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.recipient_name %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.origin_branch_name %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.destination_branch_name %></td>
+                                <td class="py-3 px-6 border-b"><%= parcel.collection_date.toDateString() %></td>
+                            </tr>
+                            <% }); %>
+                        <% } else { %>
+                            <tr>
+                            <td colspan="7" class="py-3 px-6 text-center text-gray-500">No recent parcels available</td>
+                            </tr>
+                        <% } %>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
             </div>
           </div>
     </div>

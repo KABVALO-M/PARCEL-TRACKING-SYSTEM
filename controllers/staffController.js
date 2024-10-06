@@ -78,3 +78,37 @@ exports.addStaff = async (req, res) => {
       res.status(500).json({ message: 'Error adding staff member.' });
   }
 };
+
+exports.updateStaff = async (req, res) => {
+    const { staff_id, first_name, last_name, department, branch_id, username } = req.body;
+    console.log(department)
+
+    try {
+        await Staff.updateStaff(staff_id, first_name, last_name, department, branch_id, username);
+        res.redirect('/staff');
+    } catch (error) {
+        console.error('Error updating staff:', error);
+        res.redirect('/staff');
+    }
+};
+
+exports.deleteStaff = async (req, res) => {
+    const { staff_id } = req.body;
+
+    try {
+        // Ensure staff ID is provided
+        if (!staff_id) {
+            return res.status(400).json({ success: false, message: 'Staff ID is required to delete.' });
+        }
+
+        // Delete the staff member from the database
+        await Staff.deleteStaff(staff_id);
+        
+        // Set a success message in the session
+        req.session.successMessage = 'Staff member deleted successfully.';
+        return res.status(200).json({ success: true, message: 'Staff member deleted successfully!' });
+    } catch (error) {
+        console.error('Error deleting staff member:', error);
+        return res.status(500).json({ success: false, message: 'Error deleting staff member.' });
+    }
+};

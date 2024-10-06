@@ -35,6 +35,30 @@ class Vehicle {
       throw new Error('Error finding vehicle by ID: ' + error.message);
     }
   }
+
+   // Update a vehicle by ID
+   static async update(vehicle_id, { vehicle_name, vehicle_registration_number, tracking_device_id }) {
+    try {
+      const [result] = await db.promisePool.query(`
+        UPDATE Vehicle 
+        SET vehicle_name = ?, vehicle_registration_number = ?, tracking_device_id = ?
+        WHERE vehicle_id = ?
+      `, [vehicle_name, vehicle_registration_number, tracking_device_id, vehicle_id]);
+      return result.affectedRows;
+    } catch (error) {
+      throw new Error('Error updating vehicle: ' + error.message);
+    }
+  }
+
+  // Delete a vehicle by ID
+  static async delete(vehicle_id) {
+    try {
+      const [result] = await db.promisePool.query('DELETE FROM Vehicle WHERE vehicle_id = ?', [vehicle_id]);
+      return result.affectedRows; // Return the number of affected rows (should be 1 if successful)
+    } catch (error) {
+      throw new Error('Error deleting vehicle: ' + error.message);
+    }
+  }
 }
 
 module.exports = Vehicle;
